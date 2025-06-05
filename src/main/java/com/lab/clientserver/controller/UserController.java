@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional; // Потрібно для Optional
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -25,10 +26,29 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
+            if (user.getId() != null) {
+                user.setId(null);
+            }
             User newUser = userRepository.save(user);
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // PUT-запит для оновлення існуючого користувача за ID
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User userDetails) {
+        Optional<User> userData = userRepository.findById(id);
+
+        if (userData.isPresent()) {
+            User existingUser = userData.get();
+            existingUser.setName(userDetails.getName());
+            existingUser.setAge(userDetails.getAge());
+            existingUser.setEmail(userDetails.getEmail());
+            return new ResponseEntity<>(userRepository.save(existingUser), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Користувача не знайдено
         }
     }
 
