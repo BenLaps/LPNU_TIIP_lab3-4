@@ -2,9 +2,6 @@ package com.lab.clientserver.etl; // Зазвичай має бути пакет
 
 public class RawDataObject {
 
-
-
-
     private Long id;
     private String firstName;
     private String lastName;

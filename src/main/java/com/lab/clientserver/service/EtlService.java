@@ -23,7 +23,7 @@ public class EtlService {
         System.out.println("ETL [Extract]: Початок видобування даних...");
         List<RawDataObject> rawDataList = new ArrayList<>();
 
-        // Приклад "сирих" даних
+        // Приклад сирих даних
         rawDataList.add(new RawDataObject( "Роман", "Процак", 30, "roma.protsak@example.com"));
         rawDataList.add(new RawDataObject("Марія", "Сидоренко", 25, "maria.odf123s@test.com"));
         rawDataList.add(new RawDataObject("Петро", "Іванов", 42, "petro-ivanov")); // Некоректний email
